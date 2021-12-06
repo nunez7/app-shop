@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use Faker\Factory;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +14,20 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', [App\Http\Controllers\TestController::class, 'welcome'])->name('welcome');
+//Example factory
+/*Route::get('/fakertest', function () {
+    $faker = Factory::create();
+    $limit = 10;
+    for ($i = 0; $i < $limit; $i++) {
+        echo nl2br('Name: ' . $faker->name . ', Email Address: ' . $faker->unique()->email . ', Contact No: ' . $faker->phoneNumber . "\n");
+    }
+});*/
+
+Route::get('/', [App\Http\Controllers\TestController::class, 'welcome'])->name('home');
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
+
+Route::get('/admin/products', [App\Http\Controllers\ProductController::class, 'index']);
+Route::post('/admin/products/create', [App\Http\Controllers\ProductController::class, 'create']);
+Route::post('/admin/products', [App\Http\Controllers\ProductController::class, 'store']);
