@@ -1,23 +1,33 @@
 @extends('layouts.app')
 
+@section('body-class', 'about-us bg-gray-200')
+
+@section('title-page', 'Página de usuario')
+
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
+<section class="card mx-n3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 text-start">
+                <h3 class="z-index-1">Menú</h3>
             </div>
         </div>
+        <div class="row mt-4">
+            <ul class="nav nav-pills nav-pills-icons" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link" href="#dashboard-1" role="tab" data-toggle="tab">
+                        <i class="material-icons">dashboard</i>
+                        Carrito de compras
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#tasks-1" role="tab" data-toggle="tab">
+                        <i class="material-icons">list</i>
+                        pedidos realizados
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
+</section>
 @endsection

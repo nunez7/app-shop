@@ -25,9 +25,19 @@ use Faker\Factory;
 
 Route::get('/', [App\Http\Controllers\TestController::class, 'welcome'])->name('home');
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
+//Con el prefijo admin evitamos agregar admin a todas las rutas
+Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
+    Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']); //Listar
+    Route::get('/products/create', [App\Http\Controllers\ProductController::class, 'create']); //Formulario
+    Route::post('/products', [App\Http\Controllers\ProductController::class, 'store']); //Registrar
 
-Route::get('/admin/products', [App\Http\Controllers\ProductController::class, 'index']);
-Route::post('/admin/products/create', [App\Http\Controllers\ProductController::class, 'create']);
-Route::post('/admin/products', [App\Http\Controllers\ProductController::class, 'store']);
+    Route::get('/products/{id}/edit', [App\Http\Controllers\ProductController::class, 'edit']); //Form edicion
+    Route::post('/products/{id}/edit', [App\Http\Controllers\ProductController::class, 'update']); //actualizar
+    Route::delete('/products/{id}', [App\Http\Controllers\ProductController::class, 'destroy']); //eliminar
+    //PUT PATCH DELETE
+    Route::get('/products/{id}/images', [App\Http\Controllers\ImageController::class, 'index']); //listado
+    Route::post('/products/{id}/images', [App\Http\Controllers\ImageController::class, 'store']); //Registrar
+    Route::delete('/products/{id}/images', [App\Http\Controllers\ImageController::class, 'destroy']); //eliminar
+    
+});

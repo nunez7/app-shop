@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
     <title>
        @yield('title-page', 'App-shop')
     </title>
@@ -54,16 +54,13 @@
                     </li>
                     @endif
                     @else
+                    @if(auth()->user()->admin)
                     <li class="nav-item mx-2">
-                        <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" aria-expanded="false">
-                            Sections
+                        <a href="{{ url('admin/products') }}" class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" aria-expanded="false">
+                          Gestionar productos
                         </a>
                     </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" aria-expanded="false">
-                            Docs
-                        </a>
-                    </li>
+                    @endif
                     <li class="nav-item dropdown mx-2">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
