@@ -5,8 +5,7 @@
 @section('title-page', 'Listado de productos')
 
 @section('content')
-<section class="card mx-n3">
-    <div class="container">
+<section class="mt-4 mx-n3">
         <div class="row">
             <div class="col-md-8 text-start">
                 <h3 class="z-index-1">Productos que se ofrecen</h3>
@@ -38,7 +37,7 @@
                                 <form method="post" action="{{url('admin/products/'.$p->id)}}">
                                     {{ csrf_field() }}
                                     {{method_field('DELETE')}}
-                                    <a type="button" rel="tooltip" title="Ver" class="btn btn-info btn-simple">
+                                    <a href="{{url('/products/'.$p->id)}}" rel="tooltip" title="Ver" class="btn btn-info btn-simple">
                                         <i class="material-icons">info</i>
                                     </a>
                                     <a href="{{url('admin/products/'.$p->id.'/images')}}" rel="tooltip" title="Imagenes del producto" class="btn btn-warning btn-simple">
@@ -59,6 +58,5 @@
                 {{$products->links()}}
             </div>
         </div>
-    </div>
 </section>
 @endsection

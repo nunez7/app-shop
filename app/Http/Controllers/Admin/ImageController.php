@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -13,7 +15,7 @@ class ImageController extends Controller
     public function index($id)
     {
         $product = Product::find($id);
-        $images = $product->images;
+        $images = $product->images()->orderBy('featured', 'desc')->get();
         return view('admin.products.images.index', compact('product', 'images'));
     }
 
@@ -49,6 +51,19 @@ class ImageController extends Controller
         if ($delete) {
             $productImage->delete();
         }
+
+        return back();
+    }
+    public function select($image){
+        $productImage = ProductImage::find($image);
+        //Desmarcamos las demas imagenes
+        ProductImage::where('product_id', $productImage->product->id)
+        ->update([
+            'featured' => false
+        ]);
+        //Asignamos esa imagen como preferida
+        $productImage->featured = true;
+        $productImage->save();
 
         return back();
     }

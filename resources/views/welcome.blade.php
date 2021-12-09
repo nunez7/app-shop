@@ -4,8 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
   <title>
     App-Shop
   </title>
@@ -27,7 +26,7 @@
   <!-- Navbar Transparent -->
   <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3  navbar-transparent ">
     <div class="container">
-      <a class="navbar-brand  text-white " href="https://demos.creative-tim.com/material-kit/presentation" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">
+    <a class="navbar-brand  text-white " href="{{url('/')}}" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" >
         App shop
       </a>
       <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +61,11 @@
             </a>
           </li>
           @endif
+          <li class="nav-item mx-2">
+            <a href="{{ url('/home') }}" class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" aria-expanded="false">
+              Dashboard
+            </a>
+          </li>
           <li class="nav-item dropdown mx-2">
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
               {{ Auth::user()->name }}
@@ -91,7 +95,9 @@
           <div class="col-lg-8 text-center mx-auto my-auto">
             <h1 class="text-white">Bienvenido a App Shop.</h1>
             <p class="lead mb-4 text-white opacity-8">Realiza pedidos en línea y te contactaremos para coordinar la entrega.</p>
+            @if(!auth()->user())
             <button type="submit" class="btn bg-white text-dark">Crea una cuenta</button>
+            @endif
           </div>
         </div>
       </div>
@@ -103,36 +109,39 @@
     <!-- END Section with four info areas left & one card right with image and waves -->
     <!-- -------- START Features w/ pattern background & stats & rocket -------- -->
     <section class="pb-5 position-relative bg-gradient-dark mx-n3">
-      <div class="container">
-        <div class="row">
+      <div class="container ">
+        <div class="row d-flex justify-content-center">
           <div class="col-md-8 text-start mb-5 mt-5">
             <h3 class="text-white z-index-1 position-relative">Productos que se ofrecen</h3>
             <p class="text-white opacity-8 mb-0">No hay nada que realmente quisiera hacer en la vida en lo que no pudiera ser bueno. Esa es mi habilidad.</p>
           </div>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-2 d-flex justify-content-center">
           @foreach ($products as $product)
-          <div class="col-lg-6 col-12">
-            <div class="card card-profile mt-lg-4 mt-5 z-index-2">
+          <div class="col-md-5 col-12 card m-1">
+            <div class="">
               <div class="row">
-                <div class="col-lg-4 col-md-6 col-12 mt-n5">
+                <div class="col-lg-4 col-md-6 col-12">
                   <a href="">
                     <div class="p-3 pe-md-0">
-                      <img class="w-100 border-radius-md shadow-lg" src="{{ $product->images()->first()->image }}" alt="image">
+                      <img class="w-100 border-radius-md shadow-lg" src="{{ $product->featured_image_url }}" alt="image">
                     </div>
                   </a>
                 </div>
-                <div class="col-lg-8 col-md-6 col-12 my-auto">
+                <div class="col-lg-8 col-md-6 col-12">
                   <div class="card-body ps-lg-0">
-                    <h5 class="mb-0">{{ $product->name }}</h5>
+                    <a href="{{url('/products/'.$product->id)}}" class="mb-0">{{ $product->name }}</a>
                     <h6 class="text-info">{{ $product->category->name }}</h6>
-                    <p class="mb-0">{{ $product->description }}</p>
+                    <p class="">{{ $product->description }}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           @endforeach
+        </div>
+        <div class="row mt-5 d-flex justify-content-center">
+          {{$products->links()}}
         </div>
       </div>
     </section>

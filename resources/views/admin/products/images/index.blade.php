@@ -5,7 +5,7 @@
 @section('title-page', 'Imagenes de productos')
 
 @section('content')
-<section class="card mx-n3 pb-3">
+<section class="mt-4 mx-n3 pb-3">
     <div class="container">
         <div class="row">
             <div class="col-md-8 text-start">
@@ -35,7 +35,18 @@
                         {{csrf_field()}}
                         {{method_field('DELETE')}}
                         <input type="hidden" name="image_id" value="{{$image->id}}">
-                        <button type="submit" class="btn btn-danger">Eliminar imagen</button>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="submit" class="btn btn-danger btn-round">Eliminar imagen</button>
+                        @if($image->featured)
+                        <button type="button" rel="tooltip" title="Imagen destacada de este producto" class="btn btn-info btn-fab btn-fab-mini btn-round">
+                            <i class="material-icons">favorite</i>
+                        </button>
+                        @else
+                        <a href="{{url('admin/products/images/select/'.$image->id)}}" class="btn btn-primary btn-fab btn-fab-mini btn-round">
+                            <i class="material-icons">favorite</i>
+                        </a>
+                        @endif
+                        </div>
                     </form>
                 </div>
             </div>

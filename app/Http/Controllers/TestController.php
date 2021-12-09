@@ -9,11 +9,11 @@ class TestController extends Controller
 {
     //
     public function welcome(){
-        $a = 5;
+        /*$a = 5;
         $b = 10;
         $c = $a+$b;
-        //return "El valor de la suma es: $c";
-        $products = Product::all();
+        //return "El valor de la suma es: $c";*/
+        $products = Product::paginate(10);
         return view('welcome', compact('products'));
     }
 }
