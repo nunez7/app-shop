@@ -14,6 +14,14 @@
         </div>
         <div class="card-body">
             <div class="row">
+                @if(Session::has('notification'))
+                <div class="alert alert-success alert-dismissible fade show text-white">
+                    {{ Session::get('notification') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
+            </div>
+            <div class="row">
                 <div class="col-lg-4 col-md-6 col-12">
                     <a href="">
                         <div class="p-3 pe-md-0">
@@ -27,9 +35,7 @@
                         <h6 class="text-info">{{ $product->category->name }}</h6>
                         <h5 class="text-info">${{ $product->price }}</h5>
                         <p class="">{{ $product->description }}</p>
-                        <button type="button" rel="tooltip" title="Inicia sesión para realizar compras" 
-                        class="btn btn-info btn-fab btn-fab-mini btn-round @if(!auth()->user()) readonly disabled @endif" 
-                        @if(auth()->user()) data-bs-toggle='modal' data-bs-target='#addCarModal' @endif>
+                        <button type="button" rel="tooltip" title="Inicia sesión para realizar compras" class="btn btn-info btn-fab btn-fab-mini btn-round @if(!auth()->user()) readonly disabled @endif" @if(auth()->user()) data-bs-toggle='modal' data-bs-target='#addCarModal' @endif>
                             <i class="material-icons">add</i>
                             Añadir a carrito
                         </button>

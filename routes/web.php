@@ -29,6 +29,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/products/{id}', [App\Http\Controllers\ProductController::class, 'show']); //Form edicion
 Route::post('/cart', [App\Http\Controllers\CartDetailController::class, 'store']); //Form construccion
 Route::delete('/cart', [App\Http\Controllers\CartDetailController::class, 'destroy']); //elimina detalle
+Route::post('/order', [App\Http\Controllers\CartController::class, 'update']); //button realizar pedido
 //Con el prefijo admin evitamos agregar admin a todas las rutas
 Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
     Route::get('/products', [App\Http\Controllers\Admin\ProductController::class, 'index']); //Listar

@@ -21,7 +21,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#dashboard-1" role="tab" data-toggle="tab">
+                    <a class="nav-link active" href="{{url('/home')}}" role="tab" data-toggle="tab">
                         <i class="material-icons">shopping_cart</i>
                         Carrito de compras
                     </a>
@@ -35,6 +35,12 @@
             </ul>
             <hr>
             <p>Tu carrito de compras presenta {{auth()->user()->cart->details->count()}} productos.</p>
+            @if(Session::has('notification'))
+            <div class="alert alert-success alert-dismissible fade show text-white">
+                {{ Session::get('notification') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -56,9 +62,9 @@
                             <td>
                                 <a href="{{url('/products/'.$detail->product->id)}}" target="_blank">{{$detail->product->name}}</a>
                             </td>
-                            <td>${{$detail->price}}</td>
+                            <td>$ {{$detail->price}}</td>
                             <td>{{$detail->quantity}}</td>
-                            <td>${{$detail->quantity*$detail->price}}</td>
+                            <td>$ {{$detail->quantity*$detail->price}}</td>
                             <td class="td-actions">
                                 <form method="post" action="{{url('/cart')}}">
                                     {{ csrf_field() }}
@@ -74,9 +80,25 @@
                             </td>
                         </tr>
                         @endforeach
+                        <tr>
+                            <td colspan="4" class="text-end">Total</td>
+                            <td>$ {{auth()->user()->cart->suma_detail}}</td>
+                            <td></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
+            @if(auth()->user()->cart->details->count()>0)
+            <div class="text-center">
+                <form action="{{url('/order')}}" method="post">
+                    {{csrf_field()}}
+                    <button type="submit" rel="tooltip" title="Realizar pedido" class="btn btn-info btn-fab btn-fab-mini btn-round">
+                        <i class="material-icons">done</i>
+                        Realizar pedido
+                    </button>
+                </form>
+            </div>
+            @endif
         </div>
     </div>
 </section>
